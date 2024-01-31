@@ -7,12 +7,17 @@ const userStore = createSlice({
     //状态声明
     initialState:{
         //后端反过来的类型是什么 初始值就是什么 暂定是字符串
-        token:''
+        //初始化 优先从localstorage取，不然一刷新token又变成‘’了
+        // token:''
+        token: localStorage.getItem('token_key') || ''
     },
     //同步修改方法
     reducers:{
         setToken(state, action){
+            //token存入了redux中，但一刷新就会变成初始值空字符串
             state.token = action.payload;
+            //所以需要再LocalStrorage中再存一份
+            localStorage.setItem('token_key', action.payload)
         }
     }
 })
