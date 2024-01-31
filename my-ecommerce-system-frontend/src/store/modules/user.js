@@ -1,6 +1,7 @@
 //和用户相关的状态管理
 import { createSlice } from "@reduxjs/toolkit";
 import { request } from "@/utils";
+import { setToken as _setToken, getToken, removeToken } from "@/utils";
 
 const userStore = createSlice({
     name: "user",
@@ -9,7 +10,9 @@ const userStore = createSlice({
         //后端反过来的类型是什么 初始值就是什么 暂定是字符串
         //初始化 优先从localstorage取，不然一刷新token又变成‘’了
         // token:''
-        token: localStorage.getItem('token_key') || ''
+        // token: localStorage.getItem('token_key') || ''
+        //因为在localstorage里取出token可能要复用 所以写入utils，在这调用
+        token: getToken() || ''
     },
     //同步修改方法
     reducers:{
@@ -17,7 +20,9 @@ const userStore = createSlice({
             //token存入了redux中，但一刷新就会变成初始值空字符串
             state.token = action.payload;
             //所以需要再LocalStrorage中再存一份
-            localStorage.setItem('token_key', action.payload)
+            // localStorage.setItem('token_key', action.payload)
+            //因为在localstorage里存入token可能要复用 所以写入utils，在这调用
+            _setToken(action.payload)
         }
     }
 })
