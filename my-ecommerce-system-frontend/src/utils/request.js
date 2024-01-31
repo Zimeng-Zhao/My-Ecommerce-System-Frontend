@@ -6,7 +6,7 @@
 
 import axios from "axios";
 const request = axios.create({
-    baseURL: 'http://localhost:8084',// http://localhost:8084
+    baseURL: 'http://geek.itheima.net/v1_0',// http://localhost:8084
     timeout: 5000
 })
 
