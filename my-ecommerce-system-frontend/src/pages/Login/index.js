@@ -3,6 +3,9 @@ import { Card, Form, Input, Button } from 'antd'
 import logo from '@/assets/logo.png'//导入一个图标
 
 const Login = () => {
+    const onFinish = (values) =>{
+        console.log(values);//获取输入数据
+    }
   return (
     <div className="login">
       <Card className="login-container">
@@ -10,7 +13,7 @@ const Login = () => {
         {/* 登录表单 */}
         {/* 失焦校验 antd官方用法 */}
         {/* 触发验证的时机是“onBlur”，验证就是下面的rules */}
-        <Form validateTrigger = "onBlur">
+        <Form onFinish={onFinish} validateTrigger = "onBlur">
           <Form.Item 
             name="email"//指定校验的字段名，和后端接口保持一致
             //多条校验逻辑，先校验第一条 第一条通过再验证第二条，需要全部通过
