@@ -19,7 +19,8 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons'
 import './index.scss'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useLocale } from 'antd/es/locale'
 
 const { Header, Sider } = Layout
 //菜单参数
@@ -50,6 +51,11 @@ const GeekLayout = () => {
         //用hook函数导航到想去的route
         navigate(path);
     }
+//反向高亮：刷新界面 当前的url对应的左侧菜单高亮
+//1.获取当前路由路径 react：useLocation() pathname
+const location = useLocation();
+console.log(location.pathname);
+const selectedKey = location.pathname;  
   return (
     <Layout>
       <Header className="header">
@@ -68,7 +74,7 @@ const GeekLayout = () => {
           <Menu
             mode="inline"
             theme="dark"
-            defaultSelectedKeys={['1']}
+            selectedKeys={selectedKey}//selectedkey和item数组中的key进行匹配，匹配成功得菜单栏会高亮 selectedKeys本身负责选择对应的路径，style负责高亮
             onClick={onMenuClick}
             items={items}//遍历上面的数组生成了左侧菜单
             style={{ height: '100%', borderRight: 0 }}></Menu>
