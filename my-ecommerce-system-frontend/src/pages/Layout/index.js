@@ -23,7 +23,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useLocale } from 'antd/es/locale'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserInfo } from '@/store/modules/user'
+import { clearUserInfo, fetchUserInfo } from '@/store/modules/user'
 
 const { Header, Sider } = Layout
 //菜单参数
@@ -67,6 +67,14 @@ useEffect(() =>{
 },[dispatch])
 //useSelector:专门负责从redux中获取数据
 const name = useSelector(state =>state.user.userInfo.name);
+
+//退出登录确认回调
+const onConfirm = () =>{//这样可以监控到用户什么时候点击了退出
+  console.log('确认退出');
+  dispatch(clearUserInfo());//清除用户信息
+  //跳转到登录页 useNavigate
+  navigate('/login');
+}
   return (
     <Layout>
       <Header className="header">
@@ -74,7 +82,7 @@ const name = useSelector(state =>state.user.userInfo.name);
         <div className="user-info">
           <span className="user-name">{name}</span>
           <span className="user-logout">
-            <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消">
+            <Popconfirm title="Are you sure you want to exit?" okText="Yes" cancelText="No" onConfirm={onConfirm}>
               <LogoutOutlined /> 退出
             </Popconfirm>
           </span>

@@ -27,12 +27,18 @@ const userStore = createSlice({
         },
         setUserInfo(state, action){
             state.userInfo = action.payload;
+        },
+        clearUserInfo(state){
+            state.token = '';
+            state.userInfo = {};
+            //清除localStorage里的用户信息
+            removeToken();
         }
     }
 })
 
 //解构出actionCreater
-const {setToken, setUserInfo} = userStore.actions;
+const {setToken, setUserInfo, clearUserInfo} = userStore.actions;
 
 //获取reducer函数
 const userReducer = userStore.reducer;
@@ -57,7 +63,7 @@ const fetchUserInfo = () =>{
 }
 
 
-export {setToken, fetchLogin, fetchUserInfo};
+export {setToken, fetchLogin, fetchUserInfo, clearUserInfo};
 
 export default userReducer;
 
