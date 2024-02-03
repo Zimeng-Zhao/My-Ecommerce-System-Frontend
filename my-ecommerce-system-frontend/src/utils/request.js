@@ -5,6 +5,7 @@
 //3.请求拦截器 响应拦截器 axios官方文档里有
 
 import axios from "axios";
+import { getToken } from "./token";
 const request = axios.create({
     baseURL: 'http://geek.itheima.net/v1_0',// http://localhost:8084
     timeout: 5000
@@ -13,6 +14,14 @@ const request = axios.create({
 // 添加请求拦截器
 //请求发送之前 先拦截一下 插入一些自定义的配置 【参数的处理】
 request.interceptors.request.use((config)=> {
+  //操作这个config 注入token数据
+  //1.获取token
+  //2.按照后端格式要求去做token拼接 注入
+  const token = getToken();
+  if(token){
+    //前面是axios的固定写法 后面是后端要求的格式 空格是固定写法 必须有
+    config.headers.Authorization = `Bearer ${token}`
+  }
     return config
   }, (error)=> {
     return Promise.reject(error)
