@@ -12,7 +12,8 @@ const userStore = createSlice({
         // token:''
         // token: localStorage.getItem('token_key') || ''
         //因为在localstorage里取出token可能要复用 所以写入utils，在这调用
-        token: getToken() || ''
+        token: getToken() || '',
+        userInfo: {}
     },
     //同步修改方法
     reducers:{
@@ -23,12 +24,15 @@ const userStore = createSlice({
             // localStorage.setItem('token_key', action.payload)
             //因为在localstorage里存入token可能要复用 所以写入utils，在这调用
             _setToken(action.payload)
+        },
+        setUserInfo(state, action){
+            state.userInfo = action.payload;
         }
     }
 })
 
 //解构出actionCreater
-const {setToken} = userStore.actions;
+const {setToken, setUserInfo} = userStore.actions;
 
 //获取reducer函数
 const userReducer = userStore.reducer;
@@ -42,9 +46,18 @@ const fetchLogin = (loginForm) =>{
         dispatch(setToken(res.data.token))
     }
 }
+//asynchronous method to get userInfo
+const fetchUserInfo = () =>{
+    return async (dispatch)=>{
+        //1.发送异步请求 这里的地址是后端地址 目前用的假地址
+        const res = await request.get('user/profile');
+        //2.提交同步action进行token的存入  存入的initialstate
+        dispatch(setUserInfo(res.data));
+    }
+}
 
 
-export {setToken, fetchLogin};
+export {setToken, fetchLogin, fetchUserInfo};
 
 export default userReducer;
 
