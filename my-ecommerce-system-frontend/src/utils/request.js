@@ -5,7 +5,8 @@
 //3.请求拦截器 响应拦截器 axios官方文档里有
 
 import axios from "axios";
-import { getToken } from "./token";
+import { getToken, removeToken } from "./token";
+import router from "@/router";
 const request = axios.create({
     baseURL: 'http://geek.itheima.net/v1_0',// http://localhost:8084
     timeout: 5000
@@ -36,6 +37,13 @@ request.interceptors.response.use((response)=> {
   }, (error)=> {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+    //监控401 token失效
+    console.dir(error)
+    if(error.response.status == 401){
+      removeToken();
+      router.navigate('/login');
+      window.location.reload();//强制刷新
+    }
     return Promise.reject(error)
 })
 
