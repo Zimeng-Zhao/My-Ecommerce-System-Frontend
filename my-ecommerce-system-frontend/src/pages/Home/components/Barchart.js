@@ -4,7 +4,7 @@
 import * as echarts from 'echarts';
 import { useEffect, useRef } from 'react';
 
-const BarChart = ({title}) =>{
+const BarChart = ({title, data}) =>{
         //写法2 hook
     const chartRef = useRef(null);
     useEffect(() =>{
@@ -19,7 +19,7 @@ const BarChart = ({title}) =>{
             },
         xAxis: {
             type: 'category',
-            data: ['Vue', 'React', 'Angular']
+            data: data
         },
         yAxis: {
             type: 'value'
