@@ -29,17 +29,17 @@ const { Header, Sider } = Layout
 //菜单参数
 const items = [
   {
-    label: '首页',
+    label: 'Products',
     key: '/',
     icon: <HomeOutlined />,
   },
   {
-    label: '文章管理',
+    label: 'Deals',
     key: '/article',
     icon: <DiffOutlined />,
   },
   {
-    label: '创建文章',
+    label: 'Orders',
     key: '/publish',
     icon: <EditOutlined />,
   },
@@ -83,7 +83,7 @@ const onConfirm = () =>{//这样可以监控到用户什么时候点击了退出
           <span className="user-name">{name}</span>
           <span className="user-logout">
             <Popconfirm title="Are you sure you want to exit?" okText="Yes" cancelText="No" onConfirm={onConfirm}>
-              <LogoutOutlined /> 退出
+              <LogoutOutlined /> Log out
             </Popconfirm>
           </span>
         </div>
